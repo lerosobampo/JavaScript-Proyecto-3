@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,user-scalable=no">
+    <link rel="stylesheet" href="css/app.css">
+    <script src="jquery-3.3.1.js"></script>
+    <script type="text/javascript" src="javascript/app.js"></script>
+    <title>Proyecto Unidad 3</title>
+  </head>
+
+  <body>
+  	
+    <h1>Registro de Estudiantes</h1>
+
+    <p>Matrícula</p>
+    <input type="text" placeholder="Matrícula" id="matricula">
+
+    <p>Nombre</p>
+    <input type="text" placeholder="Nombre" id="nombre">
+
+    <p>Calificación</p>
+    <input type="text" placeholder="Calificación" id="calificacion">
+
+    <br>
+    <br>
+
+    <button id="boton1">Registrar Nuevo Alumno</button>
+
+    <p>Calificación Promedio: </p>
+    <p id="promedio"></p>
+
+    <p>Calificación Más Alta: </p>
+    <p id="maxima"></p>
+
+    <p>Calificación Más Baja</p>
+    <p id="minima"></p>
+
+    <button onclick="promedio()">Calificación Promedio</button>
+    <button onclick="maxima()">Calificación Máxima</button>
+    <button onclick="minima()">Calificación Mínima</button>
+
+
+    <h1>Listado de Estudiantes</h1>
+
+    <p id="p1"></p>
+ 
+  </body>
+
+</html>
