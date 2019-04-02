@@ -1,0 +1,179 @@
+
+//------------------------------------------------------- FUNCIÓN REGISTRAR ------------------------------------------// 
+
+function registrarEstudiante() 
+{
+    var tabla = "";
+    var parrafo1 = $("#p1");
+
+    tabla += '<table border="1", cellpadding="4", cellspacing="0">';
+    tabla += '<thead>';
+    tabla += '<th colspan="5">Información de los Estudiantes</th>';
+    tabla += '</thead>';
+    tabla += '<tr>';
+    tabla += '<th>Matrícula</th>';
+    tabla += '<th>Nombre</th>';
+    tabla += '<th>Calificación</th>';
+    tabla += '<th>Editar</th>';
+    tabla += '<th>Eliminar</th>';
+    tabla += '</tr>';
+
+    for (var i = 0; i < localStorage.length; i++) 
+    {
+        var clave = localStorage.key(i);
+        var estudiante = $.parseJSON(localStorage.getItem(clave));
+
+        tabla += '<tr>';
+        tabla += '<td>' + estudiante.matricula + '</td>';
+        tabla += '<td>' + estudiante.nombre + '</td>';
+        tabla += '<td>' + estudiante.calificacion + '</td>';
+        tabla += '<td><button onclick="editarEstudiante(\'' + estudiante.matricula + '\');">Editar</button></td>';
+        tabla += '<td><button onclick="eliminarEstudiante(\'' + estudiante.matricula + '\');">Eliminar</button></td>';
+        tabla += '</tr>';
+
+    }
+
+        tabla += '</table>';
+
+        $(parrafo1).html(tabla);
+
+}
+
+
+//------------------------------------------------------ FUNCIÓN EDITAR -------------------------------------------------//    
+
+function editarEstudiante(matricula) 
+{
+    var estudiante;
+
+    for (var i = 0; i < localStorage.length; i++) 
+    {
+        var clave = localStorage.key(i);
+
+        if (clave == matricula) 
+        {
+            estudiante = $.parseJSON(localStorage.getItem(clave));
+
+            $("#matricula").val(estudiante.matricula);
+            $("#nombre").val(estudiante.nombre);
+            $("#calificacion").val(estudiante.calificacion);
+
+        }
+    }
+}
+
+//-------------------------------------------------- FUNCIÓN ELIMINAR ESTUDIANTE ---------------------------------//
+
+function eliminarEstudiante(matricula) 
+
+{
+
+    localStorage.removeItem(matricula);
+
+    listarNotas();
+
+}
+
+//------------------------------------------------------------ JQUERY --------------------------------------------//
+
+$(document).ready(function() 
+{
+    $("#boton1").click(function() 
+    {
+        var matricula = $("#matricula").val();
+        var nombre = $("#nombre").val();
+        var calificacion = $("#calificacion").val();
+
+        var estudiante =
+        {
+            matricula: matricula,
+            nombre: nombre,
+            calificacion: calificacion
+        };
+
+        estudiantes.push(estudiante); //Enviar Información a Array estudiantes//
+
+        localStorage.setItem(matricula, JSON.stringify(estudiante));
+
+        contador = localStorage.length + 1;
+
+        registrarEstudiante();
+
+        eliminar();
+
+    });
+
+
+    function eliminar() 
+    {
+        $("#matricula").val("");
+        $("#nombre").val("");
+        $("#calificacion").val("");
+    }
+
+    registrarEstudiante();
+
+}); 
+
+//-------------------------------------------------------PROMEDIO----------------------------------------------//
+
+var estudiantes = []; //Array Estudiantes//
+
+function promedio()
+{
+    var suma = 0;
+    var promedio;
+
+    for(var i=0; i < estudiantes.length; i++)
+    {
+
+        suma += parseInt(estudiantes[i].calificacion);
+
+    }
+
+    promedio = suma/estudiantes.length;
+
+    document.getElementById("promedio").innerHTML = promedio;
+
+    alert("El primedio es: "+promedio)
+}
+
+//---------------------------------------------------------MÁXIMA--------------------------------------------//
+
+function maxima()
+{
+    var valores = [];
+
+    for(var i=0; i< estudiantes.length; i++)
+    {
+        valor = parseInt(estudiantes[i].calificacion);
+        valores.push(valor);
+    }
+
+    var maxima = Math.max.apply(null,valores);
+
+    document.getElementById("maxima").innerHTML = maxima;
+
+    alert("La calificación más alta es: "+maxima)
+
+}
+
+//----------------------------------------------------------MÍNIMA-------------------------------------------//
+
+function minima()
+{
+    var valores = [];
+
+    for(var i=0; i< estudiantes.length; i++)
+    {
+        valor = parseInt(estudiantes[i].calificacion);
+        valores.push(valor);
+    }
+
+    var minima = Math.min.apply(null,valores);
+
+    document.getElementById("minima").innerHTML = minima;
+
+    alert("La calificación más baja es: "+minima)
+
+}
